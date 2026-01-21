@@ -1,0 +1,15 @@
+services:
+  insight_places_cases:
+    build:
+      context: .
+    container_name: insight_places_cases
+    volumes:
+      - './app:/app'
+  insight_places_case_db:
+    image: 'mysql:latest'
+    container_name: insight_places_case_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=strongpassword
+    ports:
+      - '7612:3306'
+
