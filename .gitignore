@@ -1,1 +1,2 @@
 app/alembic/__pycache__/*
+app/alembic/versions/__pycache__/*

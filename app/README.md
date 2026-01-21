@@ -7,14 +7,14 @@ This project replaces the MySQL script with a Python-based approach using SQLAlc
 ```
 insight_places/
 ├── alembic/
-│   ├── versions/
-│   │   └── 001_initial_schema.py
-│   └── env.py
-├── models.py
-├── database.py
-├── alembic.ini
-├── requirements.txt
-└── README.md
+│   ├── versions/          # Migration files go here
+│   ├── env.py             # Alembic environment configuration
+│   └── script.py.mako     # Template for generating migrations
+├── models.py              # SQLAlchemy models
+├── database.py            # Database connection setup
+├── alembic.ini            # Alembic configuration
+├── requirements.txt       # Python dependencies
+└── README.md             # This file
 ```
 
 ## Setup Instructions
@@ -25,7 +25,13 @@ insight_places/
 pip install -r requirements.txt
 ```
 
-### 2. Configure Database Connection
+### 2. Create Project Directories
+
+```bash
+mkdir -p alembic/versions
+```
+
+### 3. Configure Database Connection
 
 Update the database URL in both files:
 
@@ -39,7 +45,7 @@ sqlalchemy.url = mysql+pymysql://your_user:your_password@localhost/insight_place
 DATABASE_URL = "mysql+pymysql://your_user:your_password@localhost/insight_places"
 ```
 
-### 3. Create Database
+### 4. Create Database
 
 First, create the database in MySQL:
 
@@ -47,28 +53,53 @@ First, create the database in MySQL:
 CREATE DATABASE insight_places;
 ```
 
-### 4. Initialize Alembic (Already Done)
+### 5. Generate Initial Migration (Auto-generate)
 
-The project already has Alembic initialized with:
-- `alembic.ini` configuration file
-- `alembic/env.py` environment file
-- Initial migration in `alembic/versions/001_initial_schema.py`
+Now you can auto-generate the initial migration from your models:
 
-### 5. Run Migrations
+```bash
+alembic revision --autogenerate -m "Initial migration"
+```
 
-Apply the migrations to create all tables:
+This will create a migration file in `alembic/versions/` with all your tables.
+
+### 6. Review the Generated Migration
+
+Open the generated file in `alembic/versions/` and verify it looks correct.
+
+### 7. Apply the Migration
+
+Run the migration to create all tables:
 
 ```bash
 alembic upgrade head
 ```
 
-### 6. Verify Tables
+### 8. Verify Tables
 
 Check that all tables were created:
 
 ```sql
 USE insight_places;
 SHOW TABLES;
+```
+
+## Complete File Structure After Setup
+
+After following the setup steps, your project should have this structure:
+
+```
+insight_places/
+├── alembic/
+│   ├── versions/
+│   │   └── xxxx_initial_migration.py  # Auto-generated
+│   ├── env.py
+│   └── script.py.mako
+├── models.py
+├── database.py
+├── alembic.ini
+├── requirements.txt
+└── README.md
 ```
 
 ## Using the Models
