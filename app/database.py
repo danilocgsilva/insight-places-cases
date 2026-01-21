@@ -1,33 +1,24 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
-import os
-from dotenv import load_dotenv
+from sqlalchemy.orm import sessionmaker
+from models import Base
 
-load_dotenv()
-
-# Database configuration
-DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    "mysql+pymysql://root:password@localhost/insight_places?charset=utf8mb4"
-)
+# Database connection string
+DATABASE_URL = "mysql+pymysql://user:password@localhost/insight_places"
 
 # Create engine
 engine = create_engine(DATABASE_URL, echo=True)
 
-# Create session
+# Create session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base class for models
-Base = declarative_base()
-
+# Function to get database session
 def get_db():
-    """Dependency for getting database session"""
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
 
-def create_database():
-    """Create all tables"""
+# Create all tables (use this only for initial setup, prefer Alembic for migrations)
+def init_db():
     Base.metadata.create_all(bind=engine)
