@@ -5,6 +5,7 @@ services:
     container_name: insight_places_cases
     volumes:
       - './app:/app'
+    working_dir: './app'
   insight_places_case_db:
     image: 'mysql:latest'
     container_name: insight_places_case_db
