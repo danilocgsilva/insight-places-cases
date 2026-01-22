@@ -6,6 +6,12 @@ services:
     volumes:
       - './app:/app'
     working_dir: '/app'
+    environment:
+      - DB_HOST=insight_places_case_db
+      - DB_NAME=insight_places
+      - DB_USER=root
+      - DB_PASSWORD=strongpassword
+      - DB_DRIVER=mysql+pymysql
   insight_places_case_db:
     image: 'mysql:latest'
     container_name: insight_places_case_db
