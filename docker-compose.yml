@@ -1,7 +1,7 @@
 services:
   insight_places_cases:
     build:
-      context: .
+      context: configs
     container_name: insight_places_cases
     volumes:
       - './app:/app'
