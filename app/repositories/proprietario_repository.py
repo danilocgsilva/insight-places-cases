@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy import and_
 from models import Proprietario
 
-
 class ProprietarioRepository:
     def __init__(self, db: Session):
         self.db = db
